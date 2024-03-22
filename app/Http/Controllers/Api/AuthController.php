@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(request $request)
+    public function signup(request $request)
     {
         //validate data from user
         $request->validate([
