@@ -13,15 +13,18 @@ class AuthController extends Controller
     {
         //validate data from user
         $request->validate([
-            "name" => "required|min:3",
+            "Username" => "required|string",
             "email" => "required|email|unique:users",
-            "password" => "required|confirmed|min:6"
+            "Phonenumber"=>"required|string",
+            "password" => "required|confirmed|min:6",
+           
         ]);
         
         //create new user and save it to database
         $user = User::create([
-            'name' => $request->name,
+            'Username' => $request->Username,
             'email' => $request->email,
+            'Phonenumber'=>$request->Phonenumber,
             'password' => bcrypt($request->password),
             'password_confirmation' => 'required|same:password'
             ]);
@@ -47,7 +50,7 @@ class AuthController extends Controller
     public function login(Request $request){
         //validate data from the user
         $credentials=$request->validate([
-            'email' => 'required|string|email|max:255',
+            'Username' => 'required|string',
             'password' => 'required|string|min:8',
         ]);
        
@@ -55,7 +58,7 @@ class AuthController extends Controller
          $user=Auth::user();
          $access_token =$user->createToken('authToken')->plainTextToken;
             return response()->json([
-                'succes'=>true,
+                'success'=>true,
                 'message'=>'Logged In Successfully!',
                  'token'=>$access_token
                 ],201);
