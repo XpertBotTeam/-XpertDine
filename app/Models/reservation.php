@@ -15,5 +15,8 @@ class reservation extends Model
         'number_of_people'
     ];
 
-
+    public function users()
+    {
+        return $this->belongsTo(user::class);
+    }
 }
