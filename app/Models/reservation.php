@@ -12,7 +12,8 @@ class reservation extends Model
         'user_id',
         'restaurant_id',
         'reservation_time',
-        'number_of_people'
+        'number_of_people',
+        'phone_number'
     ];
 
     public function users()

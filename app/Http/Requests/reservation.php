@@ -25,7 +25,8 @@ class reservation extends FormRequest
             'user_id'=>'required',
             'restaurant_id'=>'required',
             'reservation_time'=>'required|date_format H:i',
-            'number_of_people'=>'nullable|Integer'
+            'number_of_people'=>'nullable|Integer',
+            'phone_number'=>'nullable|Integer'
         ];
     }
 }
