@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\Api\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,6 @@ Route::get('signup', 'App\Http\Controllers\API\AuthController@signup' );  // use
 Route::post('login', 'App\Http\Controllers\API\AuthController@login' )->name('login'); 
 Route::get('login', 'App\Http\Controllers\API\AuthController@login' )->name('login');  // user login
 
-
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    Route::resource('reservations',ReservationController::class); 
+});
