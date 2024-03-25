@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\reservation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ReservationController extends Controller
 {
@@ -20,7 +21,7 @@ class ReservationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(requets $request)
+    public function create(request $request)
 
     {
         
@@ -33,9 +34,10 @@ class ReservationController extends Controller
     {
         $reservation= reservation::create($request->all());
         return response()->json([
-            'status'=>201,
-            'message'=> $reservation
-        ],201);
+            'status'=>true,
+            'data'=> $reservation,
+            'message'=>'Your reservation has been completed successfully '
+        ]);
     }
 
     /**
@@ -44,7 +46,20 @@ class ReservationController extends Controller
     public function show(string $id)
     {
         $reservation= reservation::findOrFails($id);
-        return response()->json($reservation);
+        if( $reservation){
+            return response()->json([
+                'status'=>true,
+                'data'=> $reservation,
+                'message'=>'Your reservation has been completed successfully '
+            ]);
+        }else{
+            return response()->json([
+                'status'=>false,
+                 'data'=>null,
+                 'message'=>'NO reservation found '
+            ]);
+        }
+        
     }
 
     /**
@@ -63,10 +78,10 @@ class ReservationController extends Controller
         $reservation= reservation::findOrFails($id);
         $reservation->update($request->all);
         return response()->json([
-            'status'=>200,
+            'status'=>true,
             'message'=>"Updated success",
             'data'=> $reservation
-        ],200);
+        ]);
 
     }
 
@@ -76,10 +91,21 @@ class ReservationController extends Controller
     public function destroy(string $id)
     {
         $reservation= reservation::findOrFails($id);
-        $reservation->delete();
-        return response()->json([
-            'status'=>202,
-            'message'=>"The Reservation deleted success"
-        ],202);
+        $reservation->destroy();
+        if($result){
+            return response()->json([
+                'status'=>true,
+                'data'=>null,
+                'message'=>"The Reservation deleted success"
+            ]);
+
+        }else{
+            return response()->json([
+                'status'=>false,
+                 'data'=>null,
+                 'message'=>'NO reservation found'
+            ]);
+        }
+     
     }
 }
