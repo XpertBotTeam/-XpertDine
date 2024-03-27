@@ -24,7 +24,7 @@ Route::post('signup', 'App\Http\Controllers\API\AuthController@signup' );
 Route::get('signup', 'App\Http\Controllers\API\AuthController@signup' );  // user registration
 Route::post('login', 'App\Http\Controllers\API\AuthController@login' )->name('login'); 
 Route::get('login', 'App\Http\Controllers\API\AuthController@login' )->name('login');  // user login
-Route::resource('restaurants', RestaurantController::class);
 Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::resource('reservations',ReservationController::class); 
+    Route::resource('restaurants', RestaurantController::class);
 });
