@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('phoneNumber');
             $table->string('image_path')->nullable();
+            $table->Integer('rating');
             $table->timestamps();
         });
     }

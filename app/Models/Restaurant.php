@@ -13,6 +13,12 @@ class Restaurant extends Model
         'location',
         'description',
         'phoneNumber',
-        'image_path'
+        'image_path',
+        'rating'
     ];
+    public function reservations()
+    {
+        return $this->hasMany(reservation::class);
+    }
+
 }

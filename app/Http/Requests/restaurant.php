@@ -25,7 +25,9 @@ class restaurant extends FormRequest
             'name' => 'required|min:3',
             'location' => 'required',
             'description' => 'required',
-            'phoneNumber' => 'required'
+            'phoneNumber' => 'required',
+            'image_path'=>'required',
+            'rating'=>'required|numeric|between:1,5',
         ];
     }
 }

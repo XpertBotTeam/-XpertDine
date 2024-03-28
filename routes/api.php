@@ -25,6 +25,6 @@ Route::get('signup', 'App\Http\Controllers\API\AuthController@signup' );  // use
 Route::post('login', 'App\Http\Controllers\API\AuthController@login' )->name('login'); 
 Route::get('login', 'App\Http\Controllers\API\AuthController@login' )->name('login');  // user login
 Route::group(['middleware'=>['auth:sanctum']],function(){
-    Route::resource('reservations',ReservationController::class); 
-    Route::resource('restaurants', RestaurantController::class);
+    Route::resource('reservation',ReservationController::class); 
+    Route::resource('restaurant', RestaurantController::class);
 });

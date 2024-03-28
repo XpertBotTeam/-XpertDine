@@ -20,4 +20,7 @@ class reservation extends Model
     {
         return $this->belongsTo(user::class);
     }
+    public function restaurants(){
+        return $this->belongsTo(Restaurant::class,'reservation_restaurant');
+    }
 }
