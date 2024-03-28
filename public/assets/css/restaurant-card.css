@@ -1,0 +1,28 @@
+.main{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+}
+.card-con{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 10px;
+    width: fit-content;
+}
+.card-con img {
+    width: 18vw;
+    height: 30vh;
+}
+.card-con h2 {
+    font-weight: 900;
+    text-align: center;
+}
+.temp{
+    margin-left: 5%;
+    margin-bottom: 5%;
+}

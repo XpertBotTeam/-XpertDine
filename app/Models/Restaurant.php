@@ -13,7 +13,8 @@ class Restaurant extends Model
         'location',
         'description',
         'phoneNumber',
-        'image_path',
+        'logo',
+        'category',
         'rating'
     ];
     public function reservations()

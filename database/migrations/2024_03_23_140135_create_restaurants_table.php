@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('location');
             $table->string('description');
             $table->string('phoneNumber');
-            $table->string('image_path')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('category')->default('Uncategorized');
             $table->Integer('rating');
             $table->timestamps();
         });

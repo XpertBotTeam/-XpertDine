@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [RestaurantController::class, 'all']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/restaurant/{title}', [RestaurantController::class, 'single']);
