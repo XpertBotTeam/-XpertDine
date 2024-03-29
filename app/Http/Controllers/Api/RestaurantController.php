@@ -18,6 +18,7 @@ class RestaurantController extends Controller
             "location" => "required",
             "description" => "required",
             "phoneNumber" => "required",
+            "logo"=>"required",
             'category' => 'required',
             'openTime' => 'required',
             'closeTime' => 'required',
@@ -76,7 +77,8 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurant = Restaurant::all();
-        return response()->json(['data' => $restaurant], 200);
+        //return response()->json(['data' => $restaurant], 200);
+        return view('Restaurant.index')->with('restaurant', $restaurant);
     }
 
     //get one restaurant by id

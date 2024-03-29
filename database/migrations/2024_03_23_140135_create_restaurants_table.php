@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('description');
             $table->string('phoneNumber');
             $table->string('logo')->nullable();
-            $table->string('category')->nullable();
-            $table->string('openTime')->default('00:00 am');
-            $table->string('closeTime')->default('00:00 pm');
+            $table->string('category');
+            $table->dateTime('openTime')->nullable();
+            $table->dateTime('closeTime')->nullable(); // If null, it means restaurant is always open
             $table->Integer('rating');
             $table->timestamps();
         });

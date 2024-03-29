@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [RestaurantController::class, 'all']);
 
-Route::get('/restaurant/{title}', [RestaurantController::class, 'single']);
+Route::get('/restaurant', [RestaurantController::class, 'index'])->name('Restaurant.index');

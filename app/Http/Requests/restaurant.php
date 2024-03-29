@@ -26,8 +26,10 @@ class restaurant extends FormRequest
             'location' => 'required',
             'description' => 'required',
             'phoneNumber' => 'required',
-            'image_path'=>'required',
-            'rating'=>'required|numeric|between:1,5',
+            'logo'=>'required',
+            'openTime'=>'required',
+            'closeTime'=>'required',
+            'rating'=>'required|numeric|between:1,5'
         ];
     }
 }
