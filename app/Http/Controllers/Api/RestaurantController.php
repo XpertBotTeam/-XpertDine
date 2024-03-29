@@ -18,11 +18,13 @@ class RestaurantController extends Controller
             "location" => "required",
             "description" => "required",
             "phoneNumber" => "required",
+            'category' => 'required',
+            'openTime' => 'required',
+            'closeTime' => 'required',
             'rating' => 'required|numeric|between:1,5'
         ]);
     
         $logoPath = null;
-    
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
         }
@@ -33,8 +35,11 @@ class RestaurantController extends Controller
             'location' => $request->location,
             'description' => $request->description,
             'phoneNumber' => $request->phoneNumber,
+            'category' => $request->category,
             'rating' => $request->rating,
-            'logo' => $logoPath // Assign the logo path here
+            'openTime' => $request->openTime,
+            'closeTime' => $request->closeTime,
+            'logo' => $logoPath
         ]);
 
         if ($restaurant) {
