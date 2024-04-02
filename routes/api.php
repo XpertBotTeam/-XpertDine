@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ Route::post('signup', 'App\Http\Controllers\API\AuthController@signup' );
 Route::get('signup', 'App\Http\Controllers\API\AuthController@signup' );  // user registration
 Route::post('login', 'App\Http\Controllers\API\AuthController@login' )->name('login'); 
 Route::get('login', 'App\Http\Controllers\API\AuthController@login' )->name('login');  // user login
+
+Route::post('forget/password', 'App\Http\Controllers\API\ResetPasswordController@forgetpassword');
+Route::post('reset/password', 'App\Http\Controllers\API\ResetPasswordController@reset');
+
+
 Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::resource('reservation',ReservationController::class); 
     Route::resource('restaurant', RestaurantController::class);
