@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\RestaurantController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\ResetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [RestaurantController::class, 'all']);
 
-Route::get('/restaurant', [RestaurantController::class, 'index'])->name('Restaurant.index');
+Route::get('/restaurant/{id}', [RestaurantController::class, 'single'])->name('restaurant.show');
+
+Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
