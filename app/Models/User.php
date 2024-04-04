@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Reservation;
+
 
 class User extends Authenticatable
 {
@@ -42,11 +43,15 @@ class User extends Authenticatable
      */
     protected $casts = [
         'Username_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
+    /**
+     * Define a one-to-many relationship with the Reservation model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function reservations()
     {
-        return $this->hasMany(reservation::class);
+        return $this->hasMany(Reservation::class);
     }
 }
