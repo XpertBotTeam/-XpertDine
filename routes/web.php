@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ResetPasswordController;
@@ -18,3 +19,7 @@ Route::get('/', [RestaurantController::class, 'all']);
 Route::get('/restaurant/{id}', [RestaurantController::class, 'single'])->name('restaurant.show');
 
 Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+Route::get('/register', [AuthController::class, 'signupForm']);
+
+Route::post('/signup', [AuthController::class, 'signup']);
