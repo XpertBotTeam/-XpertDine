@@ -18,18 +18,18 @@ class RestaurantController extends Controller
             "location" => "required",
             "description" => "required",
             "phoneNumber" => "required",
-            "logo"=>"required",
+            "logo" => "required",
             'category' => 'required',
             'openTime' => 'required',
             'closeTime' => 'required',
             'rating' => 'required|numeric|between:1,5'
         ]);
-    
+
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
         }
-    
+
         //create new restaurant and save it to database
         $restaurant = Restaurant::create([
             'name' => $request->name,
@@ -61,8 +61,9 @@ class RestaurantController extends Controller
     public function all()
     {
         $restaurants = Restaurant::all();
-        return view('restaurant.index', compact('restaurants'));
+        return view('Restaurant.index', compact('restaurants'));
     }
+
     public function single($id)
     {
         $restaurant = Restaurant::find($id);
@@ -72,24 +73,6 @@ class RestaurantController extends Controller
         return view('restaurant.show', compact('restaurant'));
     }
 
-
-    //Get all restaurants
-    public function index()
-    {
-        $restaurant = Restaurant::all();
-        //return response()->json(['data' => $restaurant], 200);
-        return view('Restaurant.index')->with('restaurant', $restaurant);
-    }
-
-    //get one restaurant by id
-    public function show($id)
-    {
-        $restaurant = restaurant::find($id);
-        if (!is_object($restaurant)) {
-            return response()->json(["message" => "The restaurant with the given ID is not found!"], 404);
-        }
-        return response()->json(['data' => $restaurant]);
-    }
 
     //Update a restaurant information
     public function update(Request $request, $id)
