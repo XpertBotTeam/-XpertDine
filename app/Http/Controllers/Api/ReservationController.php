@@ -32,12 +32,22 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+        $user=auth()->user();
+        if($user->id==$user->id){
         $reservation= reservation::create($request->all());
         return response()->json([
             'status'=>true,
             'data'=> $reservation,
             'message'=>'Your reservation has been completed successfully '
         ]);
+    }else{
+        return response()->json([
+            'status'=>false,
+            'data'=> null,
+            'message'=>'User is not Authenticated '
+        ]);
+
+    }
     }
 
     /**
