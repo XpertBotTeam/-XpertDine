@@ -57,7 +57,7 @@ class AuthController extends Controller
             ], 201);
         } else {
             if ($request->role == "Owner") {
-                return view('Restaurant.newRestaurant');
+                return redirect('/create/restaurant');
             }
             return redirect('/');
         }

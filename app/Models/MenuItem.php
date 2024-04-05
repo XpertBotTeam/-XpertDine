@@ -5,22 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class MenuItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'location',
         'description',
-        'phoneNumber',
-        'logo',
-        'category',
-        'openTime',
-        'closeTime',
+        'price',
+        'category_id',
+        'logo'
     ];
-    public function reservations()
+
+    public function category()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->belongsTo(Category::class);
     }
 }

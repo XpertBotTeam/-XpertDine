@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Requestrestaurant;
 use App\Http\Requests\restaurant as RequestsRestaurant;
+use App\Models\RestaurantCategory;
 
 class RestaurantController extends Controller
 {
+    public function show(){
+        return view('Restaurant.newRestaurant', [
+            'category' => RestaurantCategory::all()
+        ]);
+    }
     //Add a restaurant
     public function store(Request $request)
     {
@@ -22,7 +28,6 @@ class RestaurantController extends Controller
             'category' => 'required',
             'openTime' => 'required',
             'closeTime' => 'required',
-            'rating' => 'required|numeric|between:1,5'
         ]);
 
         $logoPath = null;
@@ -30,30 +35,24 @@ class RestaurantController extends Controller
             $logoPath = $request->file('logo')->store('logos', 'public');
         }
 
-        //create new restaurant and save it to database
         $restaurant = Restaurant::create([
             'name' => $request->name,
             'location' => $request->location,
             'description' => $request->description,
             'phoneNumber' => $request->phoneNumber,
             'category' => $request->category,
-            'rating' => $request->rating,
             'openTime' => $request->openTime,
             'closeTime' => $request->closeTime,
             'logo' => $logoPath
         ]);
 
-        if ($restaurant) {
+        if ($request->header('User-Agent') === 'Flutter') {
             return response()->json([
-                'status' => true,
-                'message' => 'Restaurant has been created successfully.',
-                'data' => $restaurant
-            ]);
+                'status' => '201',
+                'message' => 'Restaurant has been created successfully.'
+            ], 201);
         } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'The restaurant not found'
-            ]);
+            return redirect('/');
         }
     }
 
