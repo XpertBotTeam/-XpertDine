@@ -16,15 +16,22 @@ class AuthController extends Controller
         return view('users.signup');
     }
 
+    public function loginForm()
+    {
+        return view('users.login');
+    }
+
 
     public function signup(Request $request)
     {
+
         // validate data from user
         $request->validate([
             "Username" => "required|string",
             "email" => "required|email|unique:users",
             "Phonenumber" => "required|string",
             "password" => "required|confirmed|min:6",
+            "role" => "required",
         ]);
 
         // create new user and save it to database
@@ -33,6 +40,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'Phonenumber' => $request->Phonenumber,
             'password' => bcrypt($request->password),
+            'role' => $request->role,
         ]);
 
         // Authenticate the user
@@ -48,7 +56,9 @@ class AuthController extends Controller
                 'token' => $access_token
             ], 201);
         } else {
-            // If it's a web request, redirect to the main page
+            if ($request->role == "Owner") {
+                return view('Restaurant.newRestaurant');
+            }
             return redirect('/');
         }
     }
@@ -61,32 +71,57 @@ class AuthController extends Controller
 
         // validate data from the user
         $credentials = $request->validate([
-            'Username' => 'required|string',
+            'username_or_email' => 'required|string',
             'password' => 'required|string|min:8',
         ]);
-        $user = User::where('email', $request->email)->first();
+
+        $user = User::where('email', $credentials['username_or_email'])
+            ->orWhere('username', $credentials['username_or_email'])
+            ->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $access_token = $user->createToken("authToken")->plainTextToken;
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Logged In Successfully!',
-                    'token' => $access_token
-                ], 201);
+                if ($request->header('User-Agent') === 'Flutter') {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Logged In Successfully!',
+                        'token' => $access_token
+                    ], 201);
+                } else {
+                    // Inside login method
+                    return redirect()->intended('/');
+                }
             } else {
                 // Passwords do not match
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Invalid Email or Password'
-                ], 200);
+                if ($request->header('User-Agent') === 'Flutter') {
+                    return response()->json([
+                        'status' => 200,
+                        'message' => 'Invalid Username/Email or Password'
+                    ], 200);
+                } else {
+                    return back()->withErrors(['loginError' => 'Invalid Username/Email or Password']);
+                }
             }
         } else {
             // User not found
-            return response()->json([
-                'status' => 200,
-                'message' => 'Invalid Email or Password'
-            ], 200);
+            if ($request->header('User-Agent') === 'Flutter') {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Invalid Username/Email or Password'
+                ], 200);
+            } else {
+                return back()->withErrors(['loginError' => 'Invalid Username/Email or Password']);
+            }
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

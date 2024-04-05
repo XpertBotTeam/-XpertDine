@@ -51,6 +51,18 @@
                 <p class="error">{{$message}}</p>
                 @enderror
             </div>
+            
+            <div class="input-box">
+                <label for="role">Role</label> <br>
+                <div class="check-box" style="display: flex">
+                    Regular User<input type="radio" name="role" value="Regular">
+                    Restaurant Owner<input type="radio" name="role" value="Owner">
+                </div>
+                <div class="sep"></div>
+                @error('role')
+                <p class="error">{{$message}}</p>
+                @enderror
+            </div>            
             <div class="button-box">
                 <button type="submit">SignUp</button>
                 <button type="reset">Reset</button>
