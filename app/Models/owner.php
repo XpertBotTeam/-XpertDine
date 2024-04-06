@@ -13,4 +13,7 @@ class owner extends Model
         'email',
         'passowrd'
     ];
+    public function Restaurants(){
+        return $this->hasone(restaurant::class);
+    }
 }
