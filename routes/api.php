@@ -29,8 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // USER AUTH
 Route::post('signup', 'App\Http\Controllers\API\AuthController@signup' );  
 Route::get('signup', 'App\Http\Controllers\API\AuthController@signup' );  // user registration
-Route::post('login', 'App\Http\Controllers\API\AuthController@login' )->name('login'); 
-Route::get('login', 'App\Http\Controllers\API\AuthController@login' )->name('login');  // user login
+Route::post('signin', 'App\Http\Controllers\API\AuthController@signin' )->name('signin'); 
+Route::get('signin', 'App\Http\Controllers\API\AuthController@sigin' )->name('signin');  // user login
 
 
 // OWNER AUTH 
@@ -46,10 +46,6 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::resource('reservation',ReservationController::class); 
     Route::resource('restaurant', RestaurantController::class);
 
-    Route::post('forgot-password', [PasswordResetlinkController::class, 'store'])
-    ->name('password.email');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-    ->name('password.store');
 });
 
 Route::post('forgot-password', [PasswordResetlinkController::class, 'sendResetPasswordEmail']);

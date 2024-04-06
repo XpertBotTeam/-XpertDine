@@ -64,7 +64,7 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function signin (Request $request)
     {
         // Log the incoming request data for debugging
         Log::info('Login request received', ['request' => $request->all()]);
@@ -75,11 +75,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        $user = User::where('email', $credentials['username_or_email'])
-            ->orWhere('username', $credentials['username_or_email'])
-            ->first();
-
-        if ($user) {
+       // $user = User::where('email', $credentials['username_or_email'])
+            //->orWhere('username', $credentials['username_or_email'])
+           // ->first();
+            if(Auth::attempt($credentials)){
+                $user=Auth::user();
             if (Hash::check($request->password, $user->password)) {
                 $access_token = $user->createToken("authToken")->plainTextToken;
                 if ($request->header('User-Agent') === 'Flutter') {
