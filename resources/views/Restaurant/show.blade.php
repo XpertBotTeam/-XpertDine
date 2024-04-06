@@ -5,6 +5,5 @@
         <p>Location: {{ $restaurant->location }}</p>
         <p>Description: {{ $restaurant->description }}</p>
         <p>Phone Number: {{ $restaurant->phoneNumber }}</p>
-        <p>Rating: {{ $restaurant->rating }}</p>
     </div>
 </x-layout>

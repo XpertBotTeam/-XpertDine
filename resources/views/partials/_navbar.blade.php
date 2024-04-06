@@ -10,11 +10,23 @@
         <ul>
             <input type="text" id="search">
         </ul>
-        <ul>
-            <a href="">Log-in</a>
-        </ul>
-        <ul>
-            <a href="/register">Sign-in</a>
-        </ul>
+        @auth
+            <ul>
+                <a href="">{{ auth()->user()->name }}</a>
+            </ul>
+            <ul>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">Logout</button>
+                </form>
+            </ul>
+        @else
+            <ul>
+                <a href="/login">Log-in</a>
+            </ul>
+            <ul>
+                <a href="/register">Sign-in</a>
+            </ul>
+        @endauth
     </li>
 </nav>
