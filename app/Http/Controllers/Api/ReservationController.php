@@ -33,7 +33,7 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $user=auth()->user();
-        if($user->id==$user->id){
+        if($user->id==$request->get('user_id')){
         $reservation= reservation::create($request->all());
         return response()->json([
             'status'=>true,
@@ -55,6 +55,7 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
+        
         $reservation= reservation::findOrFails($id);
         if( $reservation){
             return response()->json([
@@ -85,6 +86,8 @@ class ReservationController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user=auth()->user();
+        if($user->id==$user->id){
         $reservation= reservation::findOrFails($id);
         $reservation->update($request->all);
         return response()->json([
@@ -92,6 +95,13 @@ class ReservationController extends Controller
             'message'=>"Updated success",
             'data'=> $reservation
         ]);
+    }else{
+        return response()->json([
+            'status'=>false,
+            'data'=> null,
+            'message'=>'User is not Authenticated '
+        ]);
+    }
 
     }
 

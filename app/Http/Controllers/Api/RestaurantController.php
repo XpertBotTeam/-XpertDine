@@ -49,6 +49,7 @@ class RestaurantController extends Controller
         if ($request->header('User-Agent') === 'Flutter') {
             return response()->json([
                 'status' => '201',
+                'data'=>$restaurant,
                 'message' => 'Restaurant has been created successfully.'
             ], 201);
         } else {

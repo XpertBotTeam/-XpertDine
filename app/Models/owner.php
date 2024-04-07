@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class owner extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens, Notifiable;
     protected $fillable=[
         'name',
         'email',
-        'passowrd'
+        'password'
     ];
-    public function Restaurants(){
-        return $this->hasone(restaurant::class);
+    public function Restaurants()
+    {
+       return $this->hasone(restaurant::class);
     }
 }

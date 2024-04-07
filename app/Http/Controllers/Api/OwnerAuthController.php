@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\owner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class OwnerAuthController extends Controller
 {
@@ -12,7 +14,7 @@ class OwnerAuthController extends Controller
 
         $post_data = $request->validate([
                 'name'=>'required|string',
-                'email'=>'required|string|email|unique:admins',
+                'email'=>'required|string|email|unique:owners',
                 'password'=>'required'
         ]);
 
