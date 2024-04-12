@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Models\RestaurantCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Requestrestaurant;
 use App\Http\Requests\restaurant as RequestsRestaurant;
-use App\Models\RestaurantCategory;
 
 class RestaurantController extends Controller
 {
@@ -21,7 +22,7 @@ class RestaurantController extends Controller
     {
         $request->validate([
             "name" => "required|min:3",
-            "location" => "required",
+            "location" => "required|max:512",
             "description" => "required",
             "phoneNumber" => "required",
             "logo" => "required",
@@ -34,7 +35,8 @@ class RestaurantController extends Controller
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
         }
-
+        $user=auth()->user();
+        if(!$user->id==$request->get('user_id')){
         $restaurant = Restaurant::create([
             'name' => $request->name,
             'location' => $request->location,
@@ -45,6 +47,8 @@ class RestaurantController extends Controller
             'closeTime' => $request->closeTime,
             'logo' => $logoPath
         ]);
+    }
+    
 
         if ($request->header('User-Agent') === 'Flutter') {
             return response()->json([

@@ -47,6 +47,6 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::resource('restaurant', RestaurantController::class);
 
 });
-
+//forget password and Reset It
 Route::post('forgot-password', [PasswordResetlinkController::class, 'sendResetPasswordEmail']);
 Route::post('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.update');
