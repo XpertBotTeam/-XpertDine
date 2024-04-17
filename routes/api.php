@@ -3,11 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\Api\RestaurantController;
-use App\Http\Controllers\Api\ReservationController;
-use App\Http\Controllers\Api\PasswordResetlinkController;
-use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\GuestHousesController;
+use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\PasswordResetlinkController;
 
 
 
@@ -45,8 +46,11 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     
     Route::resource('reservation',ReservationController::class); 
     Route::resource('restaurant', RestaurantController::class);
-
 });
+
+Route::resource('guesthouses',GuestHousesController::class); 
+Route::get('search',[GuestHousesController::class],'search');
+
 //forget password and Reset It
 Route::post('forgot-password', [PasswordResetlinkController::class, 'sendResetPasswordEmail']);
 Route::post('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.update');
