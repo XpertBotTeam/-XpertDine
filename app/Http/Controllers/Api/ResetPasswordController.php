@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\PasswordResetToken;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -14,23 +15,35 @@ class ResetPasswordController extends Controller
         return view('password.reset', ['token' => $token]);
     }
     public function reset(Request $request, $token)
-    {
-        $request->validate([
-            'password' => 'required|min:8|confirmed',
-        ]);
+{
+    $request->validate([
+        'password' => 'required|min:8|confirmed',
+    ]);
 
-        // Retrieve user based on the token
-        $user = User::where('email', $request->email)->first();
+    // Retrieve email based on the token
+    $passwordResetToken = PasswordResetToken::where('token', $token)->first();
 
-        if (!$user) {
-            // Handle the case where user doesn't exist
-            return response()->json(['error' => 'User not found'], 404);
-        }
-
-        // Reset user's password
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        return response()->json(['message' => 'Password has been reset successfully']);
+    if (!$passwordResetToken) {
+        // Handle the case where token is invalid or expired
+        return response()->json(['error' => 'Invalid or expired token'], 400);
     }
+
+    // Retrieve user based on the email
+    $user = User::where('email', $passwordResetToken->email)->first();
+
+    if (!$user) {
+        // Handle the case where user doesn't exist
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    // Reset user's password
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    // Delete the password reset token
+    $passwordResetToken->delete();
+
+    return response()->json(['message' => 'Password has been reset successfully']);
+}
+
 }

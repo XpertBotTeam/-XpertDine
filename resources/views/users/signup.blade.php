@@ -45,7 +45,7 @@
 
             <div class="input-box">
                 <label for="Phonenumber">PhoneNumber</label> <br>
-                <input type="number" name="Phonenumber" value="{{old('nuPhonenumbermber')}}">
+                <input type="number" name="Phonenumber" value="{{old('Phonenumber')}}">
                 <div class="sep"></div>
                 @error('Phonenumber')
                 <p class="error">{{$message}}</p>

@@ -75,11 +75,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-       $user = User::where('email', $credentials['username_or_email'])
-       ->orWhere('username', $credentials['username_or_email'])
-        ->first();
+        $user = User::where('email', $credentials['username_or_email'])
+            ->orWhere('username', $credentials['username_or_email'])
+            ->first();
 
-        if($user) {
+        if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $access_token = $user->createToken("authToken")->plainTextToken;
                 if ($request->header('User-Agent') === 'Flutter') {
