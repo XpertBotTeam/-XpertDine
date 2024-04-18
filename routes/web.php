@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\Api\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showRese
 // Add a new Account
 Route::get('/register', [AuthController::class, 'signupForm']);
 Route::post('/signup', [AuthController::class, 'signup']);
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // Add a new Account
 Route::get('/login', [AuthController::class, 'loginForm']);

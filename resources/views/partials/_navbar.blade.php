@@ -8,7 +8,7 @@
             <a href="/restaurants">Restaurants</a>
         </ul>
         <ul>
-            <input type="text" id="search">
+            @include('partials._search')
         </ul>
         @auth
             <ul>
