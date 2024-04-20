@@ -124,14 +124,5 @@ class GuestHousesController extends Controller
     
         }
     
-    public function search(request $request)
-    {
-        $search=$request->input('search');
-        
-        $results=GuestHouse::where('name','LIKE',"%{$search}%")
-        ->orWhere('address','LIKE',"%{$search}%")
-        ->get();
-    }
-    
     
 }
