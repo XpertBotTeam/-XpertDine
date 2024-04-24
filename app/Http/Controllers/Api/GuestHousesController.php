@@ -13,12 +13,21 @@ class GuestHousesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(request $request)
-    {
-        $per_page =$request->get('per_page',25);
-        $GuestHouse= GuestHouse::paginate($per_page);
-        return response()->json($GuestHouse);
-    }
+        public function  search(request $request) {
+            $search =$request['search']  ?? "";
+            if ($request->header('User-Agent') === 'Flutter') {
+            if($search !="") {
+                $GuestHouse = GuestHouse::where('name','like',"%".$search."%")->get();
+            } else {
+                $GuestHouse = GuestHouse::all();
+            }
+             return response()->json([
+                 'data'=>$restaurant,
+                 "status"=>true
+             ]);
+            }
+         }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -38,8 +47,10 @@ class GuestHousesController extends Controller
             'image'=>'required',
             'Facilities'=>'required',
             'prices'=>'required',
-            'Address'=>'required',
-            'Phone_for_reservation'=>'required' 
+            'location'=>'required',
+            'Phone_for_reservation'=>'required',
+            'status'=>['available', 'fully_booked'],
+            
         ]);
         
         $imagePath = null;
@@ -51,8 +62,9 @@ class GuestHousesController extends Controller
         'Facilities'=>$request->Facilities,
         'prices'=>$request->prices,
         'image'=>$imagePath,
-        'Address'=>$request->address,
-        'phone_for_reservation'=>$request->Phoneforreservation
+        'location'=>$request->location,
+        'phone_for_reservation'=>$request->Phoneforreservation,
+        'status'=>($request->status)
         ]);
 
         if ($request->header('User-Agent') === 'Flutter') {

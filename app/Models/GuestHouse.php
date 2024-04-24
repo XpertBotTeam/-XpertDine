@@ -13,8 +13,9 @@ class GuestHouse extends Model
         'Facilities',
         'image',
         'prices',
-        'address', 
-        'Phone for reservation'
+        'location', 
+        'Phone for reservation',
+        'status'
     ];
 }
               

@@ -12,6 +12,7 @@ use App\Http\Requests\restaurant as RequestsRestaurant;
 
 class RestaurantController extends Controller
 {
+   
     public function show(){
         return view('Restaurant.newRestaurant', [
             'category' => RestaurantCategory::all()
@@ -103,3 +104,4 @@ class RestaurantController extends Controller
         }
     }
 }
+

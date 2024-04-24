@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("Description");
             $table->string("Location");
             $table->string("PhoneNumber");
+            $table->enum('status', ['available', 'fully_booked'])->nullable();
             $table->timestamps();
         });
     }

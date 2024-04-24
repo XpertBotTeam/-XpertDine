@@ -14,6 +14,7 @@ class Activities extends Model
         'Images',
         'Description',
         'Location',
-        'PhoneNumber'
+        'PhoneNumber',
+        'status'
     ];
 }

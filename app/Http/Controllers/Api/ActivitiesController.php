@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class ActivitiesController extends Controller
 {
+    
 
     public function store(Request $request)
     {
@@ -19,7 +20,8 @@ class ActivitiesController extends Controller
             'Images' => 'required',
             'Description' => 'required',
             'Location' => 'required',
-            'PhoneNumber' => 'required'
+            'PhoneNumber' => 'required',
+            'status'=>'required'
         ]);
 
         $ImagesPath = null;
@@ -31,7 +33,8 @@ class ActivitiesController extends Controller
             'Images' => $ImagesPath,
             'Description' => $request->Description,
             'Location' => $request->Location,
-            'PhoneNumber' => $request->PhoneNumber
+            'PhoneNumber' => $request->PhoneNumber,
+            'status'=>($request->status)
         ]);
 
         if ($request->header('User-Agent') === 'Flutter') {
@@ -47,6 +50,18 @@ class ActivitiesController extends Controller
                 'message' => 'Activities has been created successfully.'
             ], 201);
         }
+    }
+    public function show(string $id)
+    {
+        $Activities= Activities::findOrFail($id);
+    
+         return response()->json( $Activities);
+    }
+    public function all()
+    {
+        $Activities= Activities::all();
+    
+         return response()->json( $Activities );
     }
 
     public function destroy(string $id)

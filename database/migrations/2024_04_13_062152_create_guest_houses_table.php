@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('Facilities');
             $table->string('image')->nullable();
             $table->float('prices');
-            $table->string('Address')->nullable();
+            $table->string('location')->nullable();
             $table->string('Phone_for_reservation')->nullable();
+            $table->enum('status', ['available', 'fully_booked'])->nullable();
             $table->timestamps();
         });
     }

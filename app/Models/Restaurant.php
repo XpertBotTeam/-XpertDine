@@ -24,8 +24,8 @@ class Restaurant extends Model
     {
         return $this->hasMany(Reservation::class);
     }
-    //public function owners()
-    //{
-     //   return $this->belongTo(owner::class);
-    //}
+    public function owners()
+    {
+       return $this->belongTo(owner::class);
+    }
 }
