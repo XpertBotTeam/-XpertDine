@@ -49,8 +49,9 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     
     Route::resource('reservation',ReservationController::class); 
     Route::resource('restaurant', RestaurantController::class);
-    Route::get("profile",[ProfileController::class,'index']);
-    Route::put("update-profile/{id}", [ProfileController::class, 'update'])->name('update_profile');
+    Route::resource('user', UserProfileController::class)->only([ 'show']);
+    Route::put('profile/update/{id}', [UserProfileController::class, 'update']);
+    Route::post('logout', 'App\Http\Controllers\API\AuthController@logout') ;
   //  Route::post("/logout","App\Http\Controllers\API\AuthController@logout");
 
          // owner only route
