@@ -31,7 +31,7 @@ Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showRese
 Route::get('/register', [AuthController::class, 'signupForm']);
 Route::post('/signup', [AuthController::class, 'signup']);
 
-Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/searchR', [SearchController::class, 'SearchRestaurant'])->name('search');
 
 // Add a new Account
 Route::get('/login', [AuthController::class, 'loginForm']);
