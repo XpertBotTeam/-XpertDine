@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
@@ -15,35 +16,34 @@ class ResetPasswordController extends Controller
         return view('password.reset', ['token' => $token]);
     }
     public function reset(Request $request, $token)
-{
-    $request->validate([
-        'password' => 'required|min:8|confirmed',
-    ]);
+    {
 
-    // Retrieve email based on the token
-    $passwordResetToken = PasswordResetToken::where('token', $token)->first();
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+        ]);
 
-    if (!$passwordResetToken) {
-        // Handle the case where token is invalid or expired
-        return response()->json(['error' => 'Invalid or expired token'], 400);
+        // Retrieve email based on the token
+        $passwordResetToken = PasswordResetToken::where('token', $token)->first();
+        
+        if (!$passwordResetToken) {
+            // Handle the case where token is invalid or expired
+            return response()->json(['error' => 'Invalid or expired token'], 400);
+        }
+        // Retrieve user based on the email
+        $user = User::where('email', $passwordResetToken->email)->first();
+
+        if (!$user) {
+            // Handle the case where user doesn't exist
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Reset user's password
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Delete the password reset token
+        $passwordResetToken->delete();
+
+        return response()->json(['message' => 'Password has been reset successfully']);
     }
-
-    // Retrieve user based on the email
-    $user = User::where('email', $passwordResetToken->email)->first();
-
-    if (!$user) {
-        // Handle the case where user doesn't exist
-        return response()->json(['error' => 'User not found'], 404);
-    }
-
-    // Reset user's password
-    $user->password = Hash::make($request->password);
-    $user->save();
-
-    // Delete the password reset token
-    $passwordResetToken->delete();
-
-    return response()->json(['message' => 'Password has been reset successfully']);
-}
-
 }
