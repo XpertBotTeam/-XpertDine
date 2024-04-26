@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserProfileController extends Controller
 {
@@ -28,7 +29,7 @@ class UserProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         
     }
 
     /**
@@ -36,7 +37,9 @@ class UserProfileController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $User=user::findOrFail($id);
+        //$User = $request->user();
+        return response()->json($User);
     }
 
     /**
@@ -52,7 +55,9 @@ class UserProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $User = $request->user();
+        $User->update($request->all());
+        return response()->json(['message' => 'Profile updated successfully']);
     }
 
     /**
