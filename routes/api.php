@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\test;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\FilterController;
@@ -10,9 +11,11 @@ use App\Http\Controllers\Api\ActivitiesController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\GuestHousesController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\PasswordResetlinkController;
-use App\Http\Controllers\Api\test;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,14 +46,14 @@ Route::get('login','App\Http\Controllers\API\OwnerAuthController@login');
 Route::post('login','App\Http\Controllers\API\OwnerAuthController@login');
 
 
+
 Route::group(['middleware'=>['auth:sanctum']],function(){
     
     Route::resource('reservation',ReservationController::class); 
     Route::resource('restaurant', RestaurantController::class);
     Route::resource('user', UserProfileController::class)->only([ 'show']);
     Route::put('profile/update/{id}', [UserProfileController::class, 'update']);
-    Route::post('logout', 'App\Http\Controllers\API\AuthController@logout') ;
-  //  Route::post("/logout","App\Http\Controllers\API\AuthController@logout");
+    Route::post('logout', 'App\Http\Controllers\API\AuthController@logout');
 
          // owner only route
          // Route::group(['middleware'=>['owner']],function() {
@@ -58,13 +61,10 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
          // Route::post("addNewRestauant",[MyRestaurantController::class,"store"])->name("addnewrestauant");
          //Route::delete("deleterestauant/{id} ",[MyRestaurantController::class,"destroy"])->name("deleterestauant");
 });
-
-
 Route::resource('guesthouses',GuestHousesController::class); 
 Route::post("/activities", [ActivitiesController::class, 'store']);
 Route::get("/activities", [ActivitiesController::class, 'show']);
 Route::post('/ssss', [test::class, "test"]);
-
 
 // route  For search  
 Route::get('/searchR', [SearchController::class, 'SearchRestaurant']);
@@ -74,7 +74,6 @@ Route::get('/searchA', [SearchController::class, 'SearchActivities']);
 
 //route for filter
 Route::get('/filter/price', [FilterController::class, 'filterByPrice']);
-
 
 //forget password and Reset It
 Route::post('forgot-password', [PasswordResetlinkController::class, 'sendResetPasswordEmail']);
