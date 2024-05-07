@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('location',512);
             $table->text('description');
             $table->string('phoneNumber');
-            $table->string('logo')->nullable();
+            $table->string('images')->nullable();
             $table->string('category');
+            $table->string('city');
             $table->string('openTime')->nullable();
             $table->string('closeTime')->nullable();
             $table->timestamps();

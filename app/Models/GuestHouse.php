@@ -11,11 +11,18 @@ class GuestHouse extends Model
     protected $fillable = [
         'name',
         'Facilities',
-        'image',
+        'images',
         'prices',
         'location', 
-        'Phone for reservation',
+        'Phonenumber',
+        'city',
         'status'
+    ];
+
+
+   protected $casts=[
+        'Facilities'=>'array',
+        'images'=>'array'
     ];
 }
               

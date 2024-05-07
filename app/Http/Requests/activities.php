@@ -23,11 +23,12 @@ class activities extends FormRequest
     {
         return [
             'Name' => 'required',
-            'Images' => 'required',
+            'images' => 'required|array',
             'Description' => 'required',
             'Location' => 'required',
             'PhoneNumber' => 'required',
-            'status'=>'required'
+            'status'=>'required',
+            'city'=>'required'
         ];
     }
 }

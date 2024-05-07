@@ -8,15 +8,20 @@ use Illuminate\Http\Request;
 use App\Models\RestaurantCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Requestrestaurant;
-use App\Http\Requests\restaurant as RequestsRestaurant;
 
 class RestaurantController extends Controller
 {
+    public function index(request $request)
+    {
+        
+        $per_page =$request->get('per_page',25);
+        $restaurant = Restaurant::paginate($per_page);
+        return response()->json( $restaurant);
+    }
    
-    public function show(){
-        return view('Restaurant.newRestaurant', [
-            'category' => RestaurantCategory::all()
-        ]);
+    public function show(request $request ,string $id){
+        $restaurant = Restaurant::findOrFail($id);
+        return response()->json( $restaurant );
     }
     //Add a restaurant
     public function store(Request $request)
@@ -26,29 +31,32 @@ class RestaurantController extends Controller
             "location" => "required|max:512",
             "description" => "required",
             "phoneNumber" => "required",
-            "logo" => "required",
+            "images" => "required|array|min:1", 
             'category' => 'required',
+            'city'=>'required',
             'openTime' => 'required',
             'closeTime' => 'required',
         ]);
-
-        $logoPath = null;
-        if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
+        $images =$request->file('images');
+        $imageName='';
+        foreach($images as $image){
+          $new_name =rand().'.' .$image->getClientOriginalExtension();
+          $image->move(public_path('/assets/restaruant'), $new_name);    
+          $imageName = $imageName.$new_name.","; 
         }
-        $user=auth()->user();
-        if(!$user->id==$request->get('user_id')){
+        $imagedb=$imageName;
+      
         $restaurant = Restaurant::create([
             'name' => $request->name,
             'location' => $request->location,
             'description' => $request->description,
             'phoneNumber' => $request->phoneNumber,
             'category' => $request->category,
+            'city'=>$request->city,
             'openTime' => $request->openTime,
             'closeTime' => $request->closeTime,
-            'logo' => $logoPath
+            'images' => $imageName
         ]);
-    }
     
 
         if ($request->header('User-Agent') === 'Flutter') {
@@ -57,7 +65,7 @@ class RestaurantController extends Controller
                 'data'=>$restaurant,
                 'message' => 'Restaurant has been created successfully.'
             ], 201);
-        } else {
+      } else {
             return redirect('/');
         }
     }

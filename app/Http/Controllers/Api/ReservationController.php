@@ -87,7 +87,7 @@ class ReservationController extends Controller
     public function update(Request $request, string $id)
     {
         $user=auth()->user();
-        if($user->id==$user->id){
+        if($user->id==$request->get('user_id')){
         $reservation= reservation::findOrFails($id);
         $reservation->update($request->all);
         return response()->json([

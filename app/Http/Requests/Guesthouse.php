@@ -23,12 +23,14 @@ class Guesthouse extends FormRequest
     {
         return [
             'name'=>'required',
-            'Facilities'=>'required',
-            'image'=>'required',
+            'Facilities'=>'required|array',
+            'images' => 'required|array',
+            //'images'=>'required|array|mimes:jpg,jpeg,png,gif',
             'prices'=>'required',
             'location'=>'required',
-            'Phone_for_reservation'=>'required',
-            'status'=>['available', 'fully_booked'],
+            'Phonenumber'=>'required',
+            'city'=>'required',
+            'status'=>['available', 'fully_booked']
 
         ];
     }

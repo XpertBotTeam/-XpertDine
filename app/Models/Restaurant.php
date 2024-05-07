@@ -14,18 +14,19 @@ class Restaurant extends Model
         'location',
         'description',
         'phoneNumber',
-        'logo',
+        'images',
         'category',
-        'owner_id',
+      
+        'city',
         'openTime',
         'closeTime'
+    ];
+
+    protected $casts=[
+        'images' => 'array'
     ];
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
-    }
-    public function owners()
-    {
-       return $this->belongTo(owner::class);
     }
 }

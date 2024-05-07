@@ -15,7 +15,7 @@ class PasswordResetlinkController extends Controller
     public function sendResetPasswordEmail(Request $request)
 {
     $request->validate([
-        'email' => 'required|email',
+        'email' => 'required'
     ]);
     
     $user = User::where('email', $request->email)->first();
@@ -23,7 +23,7 @@ class PasswordResetlinkController extends Controller
     if (!$user) {
         // Handle the case where user doesn't exist
         return response()->json(['message' => 'User not found'], 404);
-    }
+     }
 
     // Generate a unique token
     $token = Str::random(60);
@@ -31,7 +31,7 @@ class PasswordResetlinkController extends Controller
     // Store the token in the password_reset_tokens table
     PasswordResetToken::create([
         'email' => $user->email,
-        'token' => $token,
+        'token' => $token
     ]);
 
     // Construct reset URL with token

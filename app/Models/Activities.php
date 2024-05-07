@@ -11,10 +11,14 @@ class Activities extends Model
 
     protected $fillable = [
         'Name',
-        'Images',
+        'images',
         'Description',
         'Location',
         'PhoneNumber',
-        'status'
+        'status',
+        'city'
+    ];
+    protected $casts=[
+        'images'=>'array'
     ];
 }

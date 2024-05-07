@@ -18,8 +18,8 @@ return new class extends Migration
             $table->dateTime('reservation_time')->nullable();
             $table->integer('number_of_people')->nullable();
             $table->Integer('phone_number')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
-            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
             $table->timestamps();
         });
     }

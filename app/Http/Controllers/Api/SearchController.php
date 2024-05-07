@@ -27,7 +27,7 @@ class SearchController extends Controller
 
         if (count($data) === 0)
             return response()->json([
-                'No Data Found!'
+                
             ]);
 
         if (!($request->header('User-Agent') === 'Flutter')) {
@@ -37,20 +37,27 @@ class SearchController extends Controller
             ]);
         } else {
             return  response()->json([
-                'status' => false,
-                'data' => 'No data found'
+                
             ]);
         }
     }
     public function SearchGuestHouse(Request $request)
     {
         $query = $request->input('search');
+       $query = $request->input('sort');
 
         $GuestHouse = GuestHouse::where('name', 'like', "%$query%")
             ->orWhere('Facilities', 'like', "%$query%")
-            ->orWhere('Address', 'like', "%$query%")
+            ->orWhere('location', 'like', "%$query%")
 
             ->get();
+
+            // sort data 
+            $GuestHouse = GuestHouse::orderBy('prices', 'asc')->get();
+            $GuestHouse = GuestHouse::orderBy('prices', 'desc')->get();
+            return $query=$GuestHouse;
+        
+            
 
         $data = [];
         foreach ($GuestHouse as $GH) {
@@ -60,7 +67,7 @@ class SearchController extends Controller
 
         if (count($data) === 0)
             return response()->json([
-                'No Data Found!'
+               
             ]);
 
         if (($request->header('User-Agent') === 'Flutter')) {
@@ -70,8 +77,7 @@ class SearchController extends Controller
             ]);
         } else {
             return  response()->json([
-                'status' => false,
-                'data' => 'No data found'
+               
             ]);
         }
     }
@@ -92,18 +98,16 @@ class SearchController extends Controller
 
         if (count($data) === 0)
             return response()->json([
-                'No Data Found!'
+                
             ]);
 
         if (($request->header('User-Agent') === 'Flutter')) {
             return response()->json([
-                'status' => 'success',
-                'data' =>  $Activities
+                
             ]);
         } else {
             return  response()->json([
-                'status' => false,
-                'data' => 'No data found'
+               
             ]);
         }
     }

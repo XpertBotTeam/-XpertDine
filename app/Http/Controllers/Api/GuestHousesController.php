@@ -13,20 +13,13 @@ class GuestHousesController extends Controller
     /**
      * Display a listing of the resource.
      */
-        public function  search(request $request) {
-            $search =$request['search']  ?? "";
-            if ($request->header('User-Agent') === 'Flutter') {
-            if($search !="") {
-                $GuestHouse = GuestHouse::where('name','like',"%".$search."%")->get();
-            } else {
-                $GuestHouse = GuestHouse::all();
-            }
-             return response()->json([
-                 'data'=>$restaurant,
-                 "status"=>true
-             ]);
-            }
-         }
+        public function  index (request $request)
+        {
+    
+            $per_page =$request->get('per_page',25);
+            $GuestHouse=GuestHouse::paginate($per_page);
+            return response()->json($GuestHouse);
+        }
     
 
     /**
@@ -44,34 +37,43 @@ class GuestHousesController extends Controller
     {
         $request->validate([
             'name' =>'required',
-            'image'=>'required',
-            'Facilities'=>'required',
+           'images'=>'required|array',
+            'Facilities'=>'required|array',
             'prices'=>'required',
             'location'=>'required',
-            'Phone_for_reservation'=>'required',
-            'status'=>['available', 'fully_booked'],
+            'Phonenumber'=>'required',
+            'city'=>'required',
+            'status'=>'required',
             
         ]);
-        
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $logoPath = $request->file('image')->store('logos', 'public');
-        }   
+          $images =$request->file('images');
+          $imageName='';
+          foreach($images as $image){
+            $new_name =rand().'.' .$image->getClientOriginalExtension();
+            $image->move(public_path('/assets/guesthouses'), $new_name);    
+            $imageName = $imageName.$new_name.","; 
+          }
+          $imagedb=$imageName;
+      
+          
        $GuestHouse = GuestHouse::create([
         'name'=>$request->name,
         'Facilities'=>$request->Facilities,
         'prices'=>$request->prices,
-        'image'=>$imagePath,
+        'images'=>$imageName,
         'location'=>$request->location,
-        'phone_for_reservation'=>$request->Phoneforreservation,
-        'status'=>($request->status)
-        ]);
+        'city'=>$request->city,
+        'phonenumber'=>$request->Phonenumber,
+        'city'=>$request->city, 
+        'status'=>$request->filled('status') ? $request->status : 'available'
+      ]);    
 
         if ($request->header('User-Agent') === 'Flutter') {
        return response()->json([
         'status'=>true,
         'message'=>'GuestHouses Added Successfully',
-        'data'=>$GuestHouse
+        'data'=>$GuestHouse,
+        'images'=>$imagedb
        ]);
     }else{
       return response()->json([

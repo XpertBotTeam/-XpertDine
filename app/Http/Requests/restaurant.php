@@ -26,7 +26,8 @@ class restaurant extends FormRequest
             'location' => 'required',
             'description' => 'required',
             'phoneNumber' => 'required',
-            'logo'=>'required',
+            'images'=>'required|array',
+            'city'=>'required',
             'openTime'=>'required',
             'closeTime'=>'required',
             'rating'=>'required|numeric|between:1,5'

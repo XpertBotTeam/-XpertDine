@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('guest_houses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('Facilities');
-            $table->string('image')->nullable();
-            $table->float('prices');
+            $table->string('name')->nullable();
+            $table->string('Facilities')->nullable();
+            $table->string('images')->nullable();
+            $table->float('prices')->nullable();
             $table->string('location')->nullable();
-            $table->string('Phone_for_reservation')->nullable();
+            $table->string('Phonenumber')->nullable();
+            $table->string('city')->nullable();
             $table->enum('status', ['available', 'fully_booked'])->nullable();
             $table->timestamps();
         });

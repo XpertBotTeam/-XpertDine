@@ -28,10 +28,9 @@ class AuthController extends Controller
         // validate data from user
         $request->validate([
             "Username" => "required|string",
-            "email" => "required|email|unique:users",
+            "email" => "required",
             "Phonenumber" => "required|string",
-            "password" => "required|confirmed|min:6",
-            "role" => "required",
+            "password" => "required|min:6"
         ]);
 
         // create new user and save it to database
@@ -39,8 +38,8 @@ class AuthController extends Controller
             'Username' => $request->Username,
             'email' => $request->email,
             'Phonenumber' => $request->Phonenumber,
-            'password' => bcrypt($request->password),
-            'role' => $request->role,
+            'password' => bcrypt($request->password)
+           
         ]);
 
         // Authenticate the user
@@ -56,10 +55,10 @@ class AuthController extends Controller
                 'token' => $access_token
             ], 201);
         } else {
-            if ($request->role == "Owner") {
-                return redirect('/create/restaurant');
-            }
-            return redirect('/');
+           return response()->json([
+            'status'=>false,
+            'message'=>'Invalid Request.'
+           ]);
         }
     }
 
@@ -120,7 +119,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        // Revoke the user's current token
+        // Remove the user's current token
         $user->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Successfully logged out']);

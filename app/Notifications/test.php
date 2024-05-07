@@ -19,8 +19,8 @@ class test extends Notification
         //
     }
 
-    /**
-     * Get the notification's delivery channels.
+    /**Get the notification
+     * 's delivery channels.
      *
      * @return array<int, string>
      */
