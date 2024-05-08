@@ -31,18 +31,18 @@ class ActivitiesController extends Controller
             'city'=>'required'
         ]);
         $images =$request->file('images');
-        $imageName='';
+        $imageNames=[];
         foreach($images as $image){
           $new_name =rand().'.' .$image->getClientOriginalExtension();
           $image->move(public_path('/assets/activities'), $new_name);    
-          $imageName = $imageName.$new_name.","; 
+          $imageNames[] = $new_name; 
         }
-        $imagedb=$imageName;
+        $imagedb= implode(',',$imageNames);
        
         
         $Activities = Activities::create([
             'Name' => $request->Name,
-            'images' => $imageName,
+            'images' => $imageNames,
             'Description' => $request->Description,
             'Location' => $request->Location,
             'PhoneNumber' => $request->PhoneNumber,

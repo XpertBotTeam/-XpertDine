@@ -46,21 +46,21 @@ class GuestHousesController extends Controller
             'status'=>'required',
             
         ]);
-          $images =$request->file('images');
-          $imageName='';
-          foreach($images as $image){
-            $new_name =rand().'.' .$image->getClientOriginalExtension();
-            $image->move(public_path('/assets/guesthouses'), $new_name);    
-            $imageName = $imageName.$new_name.","; 
-          }
-          $imagedb=$imageName;
+        $images =$request->file('images');
+        $imageNames=[];
+        foreach($images as $image){
+          $new_name =rand().'.' .$image->getClientOriginalExtension();
+          $image->move(public_path('/assets/guesthouses'), $new_name);    
+          $imageNames[] = $new_name; 
+        }
+        $imagedb= implode(',',$imageNames);
       
           
        $GuestHouse = GuestHouse::create([
         'name'=>$request->name,
         'Facilities'=>$request->Facilities,
         'prices'=>$request->prices,
-        'images'=>$imageName,
+        'images'=>$imageNames,
         'location'=>$request->location,
         'city'=>$request->city,
         'phonenumber'=>$request->Phonenumber,

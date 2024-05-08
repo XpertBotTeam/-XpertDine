@@ -38,13 +38,13 @@ class RestaurantController extends Controller
             'closeTime' => 'required',
         ]);
         $images =$request->file('images');
-        $imageName='';
+        $imageNames=[];
         foreach($images as $image){
           $new_name =rand().'.' .$image->getClientOriginalExtension();
           $image->move(public_path('/assets/restaruant'), $new_name);    
-          $imageName = $imageName.$new_name.","; 
+          $imageNames[] = $new_name; 
         }
-        $imagedb=$imageName;
+        $imagedb= implode(',',$imageNames);
       
         $restaurant = Restaurant::create([
             'name' => $request->name,
@@ -55,7 +55,7 @@ class RestaurantController extends Controller
             'city'=>$request->city,
             'openTime' => $request->openTime,
             'closeTime' => $request->closeTime,
-            'images' => $imageName
+            'images' => $imageNames
         ]);
     
 

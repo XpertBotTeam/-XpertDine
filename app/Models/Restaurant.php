@@ -16,7 +16,6 @@ class Restaurant extends Model
         'phoneNumber',
         'images',
         'category',
-      
         'city',
         'openTime',
         'closeTime'
