@@ -18,8 +18,8 @@
             </ul>
         </div>
     @endif
-
-    <form method="POST" action="{{ route('password.update', ['token' => $token]) }}">
+ 
+    <form method="Post" action="{{ route('password.update', ['token' => $token]) }}">
         <h1>Reset Your Password</h1>
         @csrf
         <input type="hidden" name="token" value="{{ request('token') }}">
@@ -34,7 +34,7 @@
             <input type="password" name="password_confirmation" id="password_confirmation" required>
         </div>
 
-        <button type="submit">Reset Password</button>
+        <button type="submit">resetpassword</button>
     </form>
 </body>
 

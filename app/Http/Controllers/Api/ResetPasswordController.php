@@ -14,15 +14,15 @@ class ResetPasswordController extends Controller
     public function showResetForm(Request $request, $token)
     {
         return view('password.reset', ['token' => $token]);
+    
     }
-    public function reset(Request $request)
+    public function reset(Request $request,$token)
     {
 
         $request->validate([
-            'password' => 'required',
-            'confirm_password' => 'required',
-            'token'=>'required'
-
+           'password'=>'required',
+           'Confirm_Password' => 'required',
+           'token'=>'required'
         ]);
 
         // Retrieve email based on the token
@@ -44,7 +44,7 @@ class ResetPasswordController extends Controller
         
         $user->update(['password'=>Hash::make($request->password)]);
        $user->tokens()->delete();
-       $success['success']=true;
+      $success['success']=true;
 
         // Delete the password reset token
        // $passwordResetToken->delete();

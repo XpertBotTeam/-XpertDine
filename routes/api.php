@@ -7,12 +7,13 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\FilterController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\AddImagesController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\Api\ActivitiesController;
 use App\Http\Controllers\Api\GoogleAuthController;
 use App\Http\Controllers\Api\RestaurantController;
-use App\Http\Controllers\Api\GuestHousesController;
 
+use App\Http\Controllers\Api\GuestHousesController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\ResetPasswordController;
@@ -90,4 +91,9 @@ Route::get('auth/google/callback',[GoogleAuthController::class,'callbackGoogle']
 
 //forget password and Reset It
 Route::post('/forgot-password', [PasswordResetlinkController::class, 'sendResetPasswordEmail']);
-Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::post('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+//route for add images only 
+Route::post('addimages',[AddImagesController::class,'store']);
+Route::get('/showimages',[AddImagesController::class,'show']);

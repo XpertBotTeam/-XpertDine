@@ -18,7 +18,11 @@ class PasswordResetlinkController extends Controller
         'email' => 'required'
     ]);
     
-    $user = User::where('email', $request->email)->first();
+     $user = User::where('email', $request->email)->first();
+     //  $user = User::where('email', $request->username_or_email)
+     // ->orWhere('username', $request->username_or_email)
+     // ->first();
+
 
     if (!$user) {
         // Handle the case where user doesn't exist

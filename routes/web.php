@@ -25,7 +25,9 @@ Route::get('/', [RestaurantController::class, 'all']);
 Route::get('/restaurant/{id}', [RestaurantController::class, 'single'])->name('restaurant.show');
 
 // Reset Password
-Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::get('/password/reset/{token}',  [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+//Route::get('/password/reset/{token}',  [ResetPasswordController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Add a new Account
 Route::get('/register', [AuthController::class, 'signupForm']);
