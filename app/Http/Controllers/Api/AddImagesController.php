@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class AddImagesController extends Controller
 {
-    public function store (request$request) {
+    public function store (request $request) {
         $request->validate([
             'images' => 'required|array'
         ]);
@@ -33,8 +33,12 @@ class AddImagesController extends Controller
         }
         public function  show(request $request){
            //return all images from the database
-           $AddImage=AddImage::all();
-           return response()->json($AddImage);
+         //  $AddImage=AddImage::all();
+          // return response()->json($AddImage);
+
+          $AddImage=AddImage::all();
+          $imageNames=$AddImage->pluck('images')->flatten()->all();
+          return response()->json($imageNames);
        }
     
 }

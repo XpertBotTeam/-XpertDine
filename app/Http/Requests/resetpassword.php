@@ -23,7 +23,8 @@ class resetpassword extends FormRequest
     {
         return [
             'password' => 'required',
-            'Confirm_Password' => 'required'
+            'Confirm_Password' => 'required',
+            'token'=>'required'
         ];
     }
 }

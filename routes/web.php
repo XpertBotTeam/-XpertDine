@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\RestaurantController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,9 @@ Route::post('/create/menuCheck', [MenuController::class, 'check']);
 
 // Logout from account
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+// Routes for user agreement and privacy policy pages
+Route::get('/user-agreement', [PageController::class,'userAgreement'])->name('user_agreement');
+Route::get('/privacy-policy', [PageController::class,'privacyPolicy'])->name('privacy_policy');
 

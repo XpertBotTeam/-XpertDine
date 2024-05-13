@@ -1,0 +1,43 @@
+/* user_agreement.css */
+
+/* Reset default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Container for the user agreement content */
+.user-agreement-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Heading style */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Paragraph style */
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Link style */
+a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none;
+}
+
+/* Style for a class used for important text */
+.important-text {
+    font-weight: bold;
+    color: #ff0000; /* Red color for important text */
+}
+
+/* Other styles as needed */

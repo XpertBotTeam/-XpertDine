@@ -43,11 +43,11 @@ class ResetPasswordController extends Controller
         // Reset user's password
         
         $user->update(['password'=>Hash::make($request->password)]);
-       $user->tokens()->delete();
+      // $user->tokens()->delete();
       $success['success']=true;
 
         // Delete the password reset token
-       // $passwordResetToken->delete();
+        $passwordResetToken->delete();
 
         return response()->json(['message' => 'Password has been reset successfully']);
     }

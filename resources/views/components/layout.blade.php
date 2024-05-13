@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/layout.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/offers.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/signup.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/user_agreement.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/privacy_policy.css')}}">
     <script src="https://kit.fontawesome.com/6043b21aa0.js" crossorigin="anonymous"></script>
     <title>XpertDine</title>
 </head>
