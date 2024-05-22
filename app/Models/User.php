@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Models\Payment;
-use App\Models\userinfo;
+
 use App\Models\Reservation;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-
-class User extends Authenticatable
+    class User extends Authenticatable  implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -61,5 +62,9 @@ class User extends Authenticatable
     public function payment(){
         return $this->hasMany(Payment::class);
     }
+
+    
+
+
  
 }

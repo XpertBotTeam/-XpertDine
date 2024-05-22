@@ -25,12 +25,11 @@ class Guesthouse extends FormRequest
             'name'=>'required',
             'Facilities'=>'required|array',
             'images' => 'required|array',
-            //'images'=>'required|array|mimes:jpg,jpeg,png,gif',
             'prices'=>'required',
             'location'=>'required',
             'Phonenumber'=>'required',
             'city'=>'required',
-            'status'=>['available', 'fully_booked']
+            'status'=>'required'
 
         ];
     }

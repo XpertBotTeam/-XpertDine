@@ -7,7 +7,7 @@ use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Models\RestaurantCategory;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Requestrestaurant;
+
 
 class RestaurantController extends Controller
 {
@@ -88,17 +88,27 @@ class RestaurantController extends Controller
 
 
     //Update a restaurant information
-    public function update(Request $request, $id)
+    public function update(Request $request,string $id)
     {
-        $restaurant = restaurant::findOrFails($id);
-        $restaurant->update($request->all);
-        return response()->json("The restaurant was updated", 201);
+        $restaurant = Restaurant::findOrFail($id);
+        if($restaurant){
+        $restaurant->update($request->all());
+        return response()->json([
+            "message"=>"The restaurant was updated",
+            "data"=> $restaurant
+         ]);
+        }else{
+            return response()->json([
+                "status"=>false,
+                "message"=>"error"
+            ]);
+        }
     }
 
     //Delete a restaurant
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $restaurant = restaurant::find($id);
+        $restaurant = Restaurant::find($id);
         $restaurant->delete();
 
         if ($restaurant) {

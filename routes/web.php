@@ -1,11 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\RestaurantController;
+
+use App\Http\Controllers\Api\VerifiactionController;
 use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
@@ -37,7 +40,7 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/searchR', [SearchController::class, 'SearchRestaurant'])->name('search');
 
 // Add a new Account
-Route::get('/login', [AuthController::class, 'loginForm']);
+Route::get('/signin', [AuthController::class, 'signin']);
 Route::post('/loginCheck', [AuthController::class, 'login']);
 
 // Add a new Restaurant
@@ -56,3 +59,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/user-agreement', [PageController::class,'userAgreement'])->name('user_agreement');
 Route::get('/privacy-policy', [PageController::class,'privacyPolicy'])->name('privacy_policy');
 
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+
+//Route::get('/email/resend',[VerifiactionController::class,'resend'])->name('verification.resend');
+//Route::post('email/verify/{id}/{hash}',[VerifiactionController::class,'verfiy'])->name('verification.verfiy');
+//Auth::routes([
+ //   'verify'=> true
+//]);

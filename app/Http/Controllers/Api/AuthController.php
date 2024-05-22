@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AuthController extends Controller
 {
@@ -124,4 +125,35 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+    public function resend(Request $request)
+    {
+       if($request->user()->hasVerifiedEmail()){
+        return response()->json(['message'=>'Your email is already verified']);
+       }
+       $request->user()->sendEmailVerificationNotification();
+
+       if($request->wantsJson()){
+        return response()->json(['message'=>'Email sent']);
+       }
+       return back()->with('resent', true);
+    }
+    /**
+     * Verify the user's email address.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verify(Request $request)
+    {
+       auth()->loginUsingId($request->route('id'));
+       if($request->route('id')!= $request->user()->getKey()){
+        throw new AuthorizationException;
+
+       }
+       if($request->user()->hasVerifiedEmail()){
+        return response()->json(['message'=>'Your email is already verified']);
+       }
+    }
+
+    
 }

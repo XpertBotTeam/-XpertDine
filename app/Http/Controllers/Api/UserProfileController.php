@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -35,5 +36,21 @@ class UserProfileController extends Controller
             'data'=>$User
         ]);
     }
+      public function destroy(Request $request)
+    {
+        $user = Auth::user();
 
+        if ($user) {
+            // Optionally revoke tokens if using Sanctum
+            $user->tokens()->delete();
+
+            // Delete the user
+            $user->delete();
+
+            return response()->json(['message' => 'User deleted successfully.'], 200);
+        }
+
+        return response()->json(['error' => 'User not found.'], 404);
+    }
 }
+

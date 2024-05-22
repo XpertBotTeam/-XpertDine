@@ -112,4 +112,18 @@ return [
 
     'password_timeout' => 10800,
 
+
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+    
+        'api' => [
+            'driver' => 'token', // or 'passport' or 'jwt' depending on your setup
+            'provider' => 'users',
+            'hash' => false,
+        ],
+    ],
+
 ];

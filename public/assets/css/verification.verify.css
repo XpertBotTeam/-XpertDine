@@ -1,0 +1,51 @@
+/* verification.css */
+
+/* Reset default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+/* Container for the verification content */
+.verification-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* White background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for container */
+}
+
+/* Heading style */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Paragraph style */
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Link style */
+a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none;
+}
+
+/* Success message style */
+.alert-success {
+    background-color: #d4edda; /* Light green background for success message */
+    border-color: #c3e6cb; /* Border color for success message */
+    color: #155724; /* Text color for success message */
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+/* Other styles as needed */
