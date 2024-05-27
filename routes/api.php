@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\FilterController;
@@ -12,8 +13,8 @@ use App\Http\Controllers\Api\AddImagesController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\Api\ActivitiesController;
 use App\Http\Controllers\Api\GoogleAuthController;
-use App\Http\Controllers\Api\RestaurantController;
 
+use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\GuesthousesController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UserProfileController;
@@ -119,9 +120,13 @@ Route::get('/showimages',[AddImagesController::class,'show']);
 
 
 //route for verification 
+Route::group(['middleware'=>['auth:sanctum']],function(){
 Route::get('/email/resend',[VerifiactionController::class,'resend'])->name('verification.resend');
-Route::post('/email/resend/',[VerifiactionController::class,'resend'])->name('verification.resend');
+Route::post('/email/resend',[VerifiactionController::class,'resend'])->name('verification.resend');
 Route::post('email/verify/{id}/{hash}',[VerifiactionController::class,'verfiy'])->name('verification.verfiy');
+Route::get('/email/verify/{id}/{hash}',[VerifiactionController::class,'verfiy'])->name('verification.verfiy');
 //Auth::routes([
-   // 'verify'=> true
-//]);
+    //'verify'=> true
+    //]);
+});
+

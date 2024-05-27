@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class VerifiactionController extends Controller
+class verificationcontroller extends Controller
 {
     use VerifiesEmails;
 
@@ -31,50 +30,33 @@ class VerifiactionController extends Controller
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify','resend');
     }
-
     
-    /**
-     * Resend the email verification notification.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function resend(Request $request)
     {
        if($request->user()->hasVerifiedEmail()){
-        return response()->json(['message'=>'Your email is already verified']);
+       return redirect($this->redirectPath());
        }
        $request->user()->sendEmailVerificationNotification();
 
-       if($request->wantsJson()){
-        return response()->json(['message'=>'Email sent']);
-       }
        return back()->with('resent', true);
     }
-    /**
-     * Verify the user's email address.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function verify(Request $request)
     {
-  
-      
-       auth()->loginUsingId($request->route('id'));
-       
-       if($request->route('id') !=$request->user()->getKey()){
-       
+        auth()->loginUsingId($request->route('id'));
+       if($request->route('id') !=$request->user()->getKey()){ 
         throw new AuthorizationException;
 
        }
        if($request->user()->hasVerifiedEmail()){
-        return response()->json(['message'=>'Your email is already verified']);
+        return  redirect($this->redirectPath());
        }
        if ($request->user()->markEmailAsVerified()){
          event(new Verified($request->user()));
        }
-       return response()->json(['message'=>'Successfully verified']);
+       return redirect($this->redirectPath())->with('verified',true);
+    }
     }
 
-}
+
+

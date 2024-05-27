@@ -7,7 +7,6 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\RestaurantController;
-
 use App\Http\Controllers\Api\VerifiactionController;
 use App\Http\Controllers\Api\ResetPasswordController;
 
@@ -60,13 +59,11 @@ Route::get('/user-agreement', [PageController::class,'userAgreement'])->name('us
 Route::get('/privacy-policy', [PageController::class,'privacyPolicy'])->name('privacy_policy');
 
 
-Auth::routes(['verify' => true]);
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
 
-//Route::get('/email/resend',[VerifiactionController::class,'resend'])->name('verification.resend');
-//Route::post('email/verify/{id}/{hash}',[VerifiactionController::class,'verfiy'])->name('verification.verfiy');
-//Auth::routes([
- //   'verify'=> true
-//]);
+Route::get('/email/resend',[VerifiactionController::class,'resend']);
+Route::post('email/verify/{id}/{hash}',[VerifiactionController::class,'verfiy']);
+Auth::routes([
+'verify'=> true
+]);

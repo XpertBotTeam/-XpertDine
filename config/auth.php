@@ -122,7 +122,7 @@ return [
         'api' => [
             'driver' => 'token', // or 'passport' or 'jwt' depending on your setup
             'provider' => 'users',
-            'hash' => false,
+            'hash' => true,
         ],
     ],
 
